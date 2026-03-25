@@ -26,17 +26,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Scroll snap — desktop only, proximity mode for subtle magnetic pull */
-@media (min-width: 1024px) {
-  html {
-    scroll-snap-type: y proximity;
-  }
-  section[id] {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
-    scroll-margin-top: 60px;
-  }
-}
+/* No scroll snap — smooth natural scroll everywhere */
 
 /* Prevent horizontal overflow on mobile from animations */
 body {
