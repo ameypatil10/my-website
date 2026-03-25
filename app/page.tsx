@@ -1,3 +1,10 @@
+import Navigation from "@/components/Navigation"
+
 export default function Home() {
-  return <main id="main-content" className="min-h-screen">Portfolio coming soon</main>
+  return (
+    <>
+      <Navigation />
+      <main id="main-content" className="min-h-screen">Portfolio coming soon</main>
+    </>
+  )
 }
