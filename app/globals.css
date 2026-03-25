@@ -376,3 +376,35 @@ body {
   background-size: 200% 100%;
   animation: shimmer-bar 2s ease-in-out 1.5s 1;
 }
+
+/* Hero floating tech keywords */
+@keyframes float-keyword-0 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(15px, -10px); }
+}
+@keyframes float-keyword-1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-12px, 8px); }
+}
+@keyframes float-keyword-2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(8px, 12px); }
+}
+
+/* Hero orbital ring spin */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Hero ambient particles */
+@keyframes particle-float {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(10px, -15px); }
+  50% { transform: translate(-5px, 10px); }
+  75% { transform: translate(8px, 5px); }
+}
+@keyframes particle-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}

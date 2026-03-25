@@ -39,6 +39,33 @@ function useTypewriter(text: string, speed = 35, startDelay = 1200) {
   return { displayed, done }
 }
 
+const floatingKeywords = [
+  { text: 'LLMs', x: 8, y: 15, size: 32, opacity: 0.06, duration: 25, color: 'var(--accent)' },
+  { text: 'RLHF', x: 75, y: 20, size: 24, opacity: 0.04, duration: 30, color: 'var(--cyan)' },
+  { text: 'Neural Networks', x: 15, y: 70, size: 20, opacity: 0.05, duration: 35, color: 'var(--accent-bright)' },
+  { text: 'GPT', x: 85, y: 65, size: 36, opacity: 0.05, duration: 22, color: 'var(--cyan)' },
+  { text: 'Transformers', x: 55, y: 85, size: 22, opacity: 0.04, duration: 28, color: 'var(--accent)' },
+  { text: 'PyTorch', x: 25, y: 40, size: 18, opacity: 0.03, duration: 32, color: 'var(--cyan)' },
+  { text: 'GRPO', x: 70, y: 45, size: 20, opacity: 0.05, duration: 26, color: 'var(--accent-bright)' },
+  { text: 'Semantic Search', x: 40, y: 12, size: 16, opacity: 0.04, duration: 38, color: 'var(--accent)' },
+  { text: 'ACL 2024', x: 90, y: 35, size: 18, opacity: 0.05, duration: 30, color: 'var(--cyan)' },
+  { text: 'BERT', x: 5, y: 50, size: 26, opacity: 0.04, duration: 24, color: 'var(--accent-bright)' },
+  { text: 'Translation', x: 60, y: 75, size: 20, opacity: 0.04, duration: 34, color: 'var(--accent)' },
+  { text: 'DPO', x: 35, y: 55, size: 22, opacity: 0.03, duration: 29, color: 'var(--cyan)' },
+  { text: 'Attention', x: 80, y: 80, size: 18, opacity: 0.04, duration: 36, color: 'var(--accent-bright)' },
+  { text: 'Fine-tuning', x: 20, y: 25, size: 16, opacity: 0.03, duration: 33, color: 'var(--accent)' },
+  { text: 'EMNLP', x: 50, y: 30, size: 20, opacity: 0.04, duration: 27, color: 'var(--cyan)' },
+]
+
+const ambientParticles = [
+  { x: 12, y: 20, size: 3, delay: 0, duration: 8 },
+  { x: 88, y: 30, size: 2, delay: 2, duration: 10 },
+  { x: 30, y: 75, size: 2.5, delay: 4, duration: 9 },
+  { x: 75, y: 70, size: 3, delay: 1, duration: 7 },
+  { x: 50, y: 15, size: 2, delay: 3, duration: 11 },
+  { x: 65, y: 50, size: 2, delay: 5, duration: 8 },
+]
+
 export default function Hero() {
   const isMobile = useIsMobile()
   const isTouch = useIsTouchDevice()
@@ -73,6 +100,9 @@ export default function Hero() {
 
   // Scroll indicator
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0.55, 0.7], [1, 0])
+
+  // Keywords/particles fade out on scroll
+  const keywordsOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
 
   // Parallax for orbs
   const orbsY = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -80 : -200])
@@ -156,6 +186,80 @@ export default function Hero() {
 
         {/* Floating orbs */}
         <FloatingOrbs parallaxY={orbsY} isMobile={isMobile} />
+
+        {/* Floating tech keywords, orbital rings, ambient particles */}
+        <motion.div className="absolute inset-0 pointer-events-none z-[2]" style={{ opacity: keywordsOpacity }}>
+          {/* Floating tech keywords */}
+          {floatingKeywords
+            .filter((_, i) => !isMobile || i % 2 === 0)
+            .map((kw, i) => (
+              <span
+                key={kw.text}
+                className="absolute font-mono font-bold pointer-events-none select-none"
+                style={{
+                  left: `${kw.x}%`,
+                  top: `${kw.y}%`,
+                  fontSize: kw.size,
+                  color: kw.color,
+                  opacity: kw.opacity,
+                  animation: `float-keyword-${i % 3} ${kw.duration}s ease-in-out infinite`,
+                  willChange: 'transform',
+                }}
+              >
+                {kw.text}
+              </span>
+            ))}
+
+          {/* Orbital rings */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            {/* Outer ring */}
+            <div
+              className="absolute rounded-full border"
+              style={{
+                width: isMobile ? '300px' : '520px',
+                height: isMobile ? '300px' : '520px',
+                borderColor: 'rgba(94,106,210,0.06)',
+                animation: 'spin-slow 60s linear infinite',
+                willChange: 'transform',
+              }}
+            >
+              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/30" />
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan/20" />
+              <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-bright/25" />
+            </div>
+            {/* Inner ring — rotates opposite direction */}
+            <div
+              className="absolute rounded-full border"
+              style={{
+                width: isMobile ? '200px' : '380px',
+                height: isMobile ? '200px' : '380px',
+                borderColor: 'rgba(0,212,255,0.04)',
+                animation: 'spin-slow 45s linear infinite reverse',
+                willChange: 'transform',
+              }}
+            >
+              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan/25" />
+              <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-1 h-1 rounded-full bg-accent/20" />
+            </div>
+          </div>
+
+          {/* Ambient particles */}
+          {ambientParticles.map((p, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full pointer-events-none"
+              style={{
+                left: `${p.x}%`,
+                top: `${p.y}%`,
+                width: p.size,
+                height: p.size,
+                background: 'var(--cyan)',
+                boxShadow: '0 0 6px var(--cyan)',
+                animation: `particle-float ${p.duration}s ease-in-out ${p.delay}s infinite, particle-glow 3s ease-in-out ${p.delay}s infinite`,
+              }}
+            />
+          ))}
+        </motion.div>
 
         {/* Hero content — scroll-driven zoom-out */}
         <div className="relative z-10 text-center max-w-[800px] mx-auto">
