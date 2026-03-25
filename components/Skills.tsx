@@ -6,7 +6,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { skills } from '@/lib/data'
 import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
 
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const iconMap: Record<string, React.ElementType> = {
   Layers,
   Globe,
   MessageSquare,
