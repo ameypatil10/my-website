@@ -10,6 +10,7 @@ import type {
 } from './types'
 
 export const navLinks: NavLink[] = [
+  { label: 'WizzMe', href: '#wizzme' },
   { label: 'About', href: '#about' },
   { label: 'Experience', href: '#experience' },
   { label: 'Skills', href: '#skills' },
@@ -329,6 +330,52 @@ export const githubRepos: GitHubRepo[] = [
     url: 'https://github.com/ameypatil10',
   },
 ]
+
+export const wizzme = {
+  tagline: 'AI-Native Knowledge Network',
+  mission: 'Transforming how people make decisions by connecting them with lived experiences from their network.',
+  insight: 'Knowledge isn\'t information. Knowledge is lived experience.',
+  role: 'Co-Founder & CTO',
+  roleDescription: 'Technical architect and execution engine — designing scalable social graph architecture, leading AI/ML systems, and driving product from zero to one.',
+  pillars: [
+    {
+      title: 'Consume',
+      subtitle: 'Get Contextual Answers',
+      description: 'Describe your problem → Chat Agent asks clarifying questions → Searches relevant stories from people who\'ve lived through it → Synthesizes contextual answers with sources.',
+      icon: 'MessageCircle',
+      gradient: 'from-accent to-accent-bright',
+    },
+    {
+      title: 'Share',
+      subtitle: 'Document Experiences',
+      description: 'Podcast Agent makes sharing frictionless — respond naturally via voice or text → Agent synthesizes into stories → See immediate impact as your story helps others.',
+      icon: 'Mic',
+      gradient: 'from-cyan to-accent',
+    },
+    {
+      title: 'Connect',
+      subtitle: 'Mediated Introductions',
+      description: 'Demand capture reveals what people need → Pattern clustering motivates mentors → Contextual DMs with full context replace cold outreach.',
+      icon: 'Users',
+      gradient: 'from-accent-bright to-cyan',
+    },
+    {
+      title: 'Grow',
+      subtitle: 'Build Expertise',
+      description: 'Stories accumulate showing expertise depth → Gamification with impact metrics → Trust and authority compound over time as you help more people.',
+      icon: 'TrendingUp',
+      gradient: 'from-cyan to-accent-bright',
+    },
+  ],
+  features: [
+    'Chat Agent — Conversational discovery + synthesis engine',
+    'Podcast Agent — Voice-first frictionless experience capture',
+    'Thought Partner — AI companion with transparent memory retrieval',
+    'Smart Question Drafting — Expert tagging at 0.75 confidence',
+    'Insights Dashboard — Personalized discovery of people and knowledge',
+    'Social Graph Architecture — Scalable knowledge network backbone',
+  ],
+}
 
 export const socialLinks = {
   email: 'mailto:ameypatil.10699.ap@gmail.com',
