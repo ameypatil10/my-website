@@ -39,22 +39,23 @@ function useTypewriter(text: string, speed = 35, startDelay = 1200) {
   return { displayed, done }
 }
 
+// Keywords pushed to edges — center 25-75% x, 20-70% y is clear zone for hero content
 const floatingKeywords = [
-  { text: 'LLMs', x: 8, y: 15, size: 32, opacity: 0.15, duration: 25, color: 'var(--accent-bright)' },
-  { text: 'RLHF', x: 75, y: 18, size: 24, opacity: 0.1, duration: 30, color: 'var(--cyan)' },
-  { text: 'Neural Networks', x: 12, y: 72, size: 20, opacity: 0.12, duration: 35, color: 'var(--accent-bright)' },
-  { text: 'GPT', x: 85, y: 62, size: 38, opacity: 0.14, duration: 22, color: 'var(--cyan)' },
-  { text: 'Transformers', x: 55, y: 88, size: 22, opacity: 0.1, duration: 28, color: 'var(--accent-bright)' },
-  { text: 'PyTorch', x: 22, y: 38, size: 18, opacity: 0.08, duration: 32, color: 'var(--cyan)' },
-  { text: 'GRPO', x: 72, y: 42, size: 20, opacity: 0.12, duration: 26, color: 'var(--accent-bright)' },
-  { text: 'Semantic Search', x: 38, y: 10, size: 16, opacity: 0.09, duration: 38, color: 'var(--accent)' },
-  { text: 'ACL 2024', x: 88, y: 32, size: 18, opacity: 0.12, duration: 30, color: 'var(--cyan)' },
-  { text: 'BERT', x: 3, y: 48, size: 28, opacity: 0.11, duration: 24, color: 'var(--accent-bright)' },
-  { text: 'Translation', x: 62, y: 78, size: 20, opacity: 0.1, duration: 34, color: 'var(--accent)' },
-  { text: 'DPO', x: 35, y: 55, size: 22, opacity: 0.08, duration: 29, color: 'var(--cyan)' },
-  { text: 'Attention', x: 82, y: 82, size: 18, opacity: 0.1, duration: 36, color: 'var(--accent-bright)' },
-  { text: 'Fine-tuning', x: 18, y: 25, size: 16, opacity: 0.08, duration: 33, color: 'var(--accent)' },
-  { text: 'EMNLP', x: 48, y: 28, size: 20, opacity: 0.1, duration: 27, color: 'var(--cyan)' },
+  { text: 'LLMs', x: 5, y: 12, size: 32, opacity: 0.15, duration: 25, color: 'var(--accent-bright)' },
+  { text: 'RLHF', x: 82, y: 10, size: 24, opacity: 0.12, duration: 30, color: 'var(--cyan)' },
+  { text: 'Neural Networks', x: 3, y: 75, size: 20, opacity: 0.12, duration: 35, color: 'var(--accent-bright)' },
+  { text: 'GPT', x: 85, y: 72, size: 38, opacity: 0.14, duration: 22, color: 'var(--cyan)' },
+  { text: 'Transformers', x: 10, y: 88, size: 22, opacity: 0.1, duration: 28, color: 'var(--accent-bright)' },
+  { text: 'PyTorch', x: 80, y: 85, size: 18, opacity: 0.09, duration: 32, color: 'var(--cyan)' },
+  { text: 'GRPO', x: 88, y: 45, size: 20, opacity: 0.1, duration: 26, color: 'var(--accent-bright)' },
+  { text: 'Semantic Search', x: 8, y: 5, size: 16, opacity: 0.09, duration: 38, color: 'var(--accent)' },
+  { text: 'ACL 2024', x: 85, y: 18, size: 18, opacity: 0.12, duration: 30, color: 'var(--cyan)' },
+  { text: 'BERT', x: 2, y: 45, size: 28, opacity: 0.11, duration: 24, color: 'var(--accent-bright)' },
+  { text: 'Translation', x: 78, y: 78, size: 20, opacity: 0.1, duration: 34, color: 'var(--accent)' },
+  { text: 'DPO', x: 5, y: 58, size: 22, opacity: 0.09, duration: 29, color: 'var(--cyan)' },
+  { text: 'Attention', x: 90, y: 55, size: 18, opacity: 0.1, duration: 36, color: 'var(--accent-bright)' },
+  { text: 'Fine-tuning', x: 12, y: 22, size: 16, opacity: 0.08, duration: 33, color: 'var(--accent)' },
+  { text: 'EMNLP', x: 75, y: 5, size: 20, opacity: 0.1, duration: 27, color: 'var(--cyan)' },
 ]
 
 const ambientParticles = [
@@ -213,8 +214,8 @@ export default function Hero() {
             <div
               className="absolute rounded-full border"
               style={{
-                width: isMobile ? '300px' : '520px',
-                height: isMobile ? '300px' : '520px',
+                width: isMobile ? '340px' : '650px',
+                height: isMobile ? '340px' : '650px',
                 borderColor: 'rgba(94,106,210,0.12)',
                 animation: 'spin-slow 60s linear infinite',
                 willChange: 'transform',
@@ -228,8 +229,8 @@ export default function Hero() {
             <div
               className="absolute rounded-full border"
               style={{
-                width: isMobile ? '200px' : '380px',
-                height: isMobile ? '200px' : '380px',
+                width: isMobile ? '220px' : '480px',
+                height: isMobile ? '220px' : '480px',
                 borderColor: 'rgba(0,212,255,0.08)',
                 animation: 'spin-slow 45s linear infinite reverse',
                 willChange: 'transform',
