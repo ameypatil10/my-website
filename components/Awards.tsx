@@ -53,7 +53,7 @@ function Sparkles({ active }: { active: boolean }) {
 
 function AwardCard({ award, index }: { award: typeof awards[0]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(cardRef, { once: true, amount: 0.5 })
+  const isInView = useInView(cardRef, { once: true, amount: 0.2 })
   const isTouch = useIsTouchDevice()
   const { ref: magneticRef, position, handleMouseMove, handleMouseLeave } = useMagnetic(0.15)
 
@@ -62,7 +62,10 @@ function AwardCard({ award, index }: { award: typeof awards[0]; index: number })
       ref={magneticRef}
       onMouseMove={isTouch ? undefined : handleMouseMove}
       onMouseLeave={isTouch ? undefined : handleMouseLeave}
+      className="relative"
     >
+      {/* Sparkles rendered outside overflow-hidden card so they're visible */}
+      <Sparkles active={isInView} />
       <motion.div
         ref={cardRef}
         variants={cardReveal}
@@ -78,8 +81,6 @@ function AwardCard({ award, index }: { award: typeof awards[0]; index: number })
           borderColor: "rgba(255,255,255,0.12)",
         }}
       >
-        <Sparkles active={isInView} />
-
         {/* Top glow line - animates from center outward */}
         <div
           className="absolute top-[-1px] left-1/2 h-px transition-all duration-500 ease-out group-hover:opacity-100 opacity-0"
