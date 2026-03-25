@@ -107,13 +107,6 @@ function PillarCard({ pillar, index }: { pillar: typeof wizzme.pillars[0]; index
   )
 }
 
-const flywheelSteps = [
-  'More Sharers',
-  'More Stories',
-  'Better Answers',
-  'More Seekers',
-]
-
 export default function WizzMe() {
   return (
     <section
@@ -286,76 +279,6 @@ export default function WizzMe() {
           </motion.div>
         </motion.div>
 
-        {/* Knowledge Flywheel visual */}
-        <motion.div
-          className="mt-16"
-          variants={staggerContainer(80)}
-          initial="initial"
-          whileInView="animate"
-          viewport={viewportConfig}
-        >
-          <motion.p
-            variants={fadeUp}
-            className="text-center text-[11px] font-mono font-semibold tracking-[2px] uppercase text-accent-bright mb-6"
-          >
-            {'// Knowledge Flywheel'}
-          </motion.p>
-
-          <div className="flex items-center justify-center gap-1 md:gap-2 flex-wrap">
-            {flywheelSteps.map((step, i) => (
-              <motion.div
-                key={step}
-                variants={{
-                  initial: { opacity: 0, x: -20 },
-                  animate: {
-                    opacity: 1,
-                    x: 0,
-                    transition: { duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                className="flex items-center gap-1 md:gap-2"
-              >
-                <span
-                  className="inline-block px-4 py-2 rounded-full text-[13px] font-medium text-foreground border"
-                  style={{
-                    background: 'var(--bg-card)',
-                    borderColor: 'var(--border)',
-                  }}
-                >
-                  {step}
-                </span>
-                {i < flywheelSteps.length - 1 && (
-                  <span
-                    className="text-[16px] font-bold"
-                    style={{
-                      background: 'linear-gradient(90deg, #5E6AD2, #00d4ff)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    }}
-                  >
-                    &rarr;
-                  </span>
-                )}
-                {i === flywheelSteps.length - 1 && (
-                  <span
-                    className="text-[16px] font-bold"
-                    style={{
-                      background: 'linear-gradient(90deg, #00d4ff, #5E6AD2)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    }}
-                  >
-                    &#x21BB;
-                  </span>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   )

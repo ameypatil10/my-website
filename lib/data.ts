@@ -371,8 +371,6 @@ export const wizzme = {
     'Chat Agent — Conversational discovery + synthesis engine',
     'Podcast Agent — Voice-first frictionless experience capture',
     'Thought Partner — AI companion with transparent memory retrieval',
-    'Smart Question Drafting — Expert tagging at 0.75 confidence',
-    'Insights Dashboard — Personalized discovery of people and knowledge',
     'Social Graph Architecture — Scalable knowledge network backbone',
   ],
 }
