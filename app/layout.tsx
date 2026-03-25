@@ -32,6 +32,7 @@ export const metadata: Metadata = {
     description:
       'Portfolio of Amey Patil — 5+ years building foundational LLMs, conversational AI, and NLP systems at Flipkart. Published researcher (ACL, EMNLP, NAACL). IIT Bombay CS.',
   },
+  icons: { icon: '/favicon.svg' },
 }
 
 // Static JSON-LD structured data for SEO (Person schema)
