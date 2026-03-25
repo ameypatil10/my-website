@@ -8,38 +8,43 @@ import { staggerContainer, cardReveal, viewportConfig } from "@/lib/animations"
 import { useMagnetic } from "@/hooks/useMagnetic"
 import { useIsTouchDevice } from "@/hooks/useIsTouchDevice"
 
+// Deterministic sparkle positions to avoid hydration mismatch
+const sparkleConfigs = [
+  { left: '25%', delay: 0, color: 'var(--cyan)', size: 4, yOffset: -45, xOffset: -15 },
+  { left: '35%', delay: 0.1, color: 'var(--accent-bright)', size: 3, yOffset: -55, xOffset: 8 },
+  { left: '45%', delay: 0.15, color: '#fff', size: 3, yOffset: -40, xOffset: -5 },
+  { left: '55%', delay: 0.2, color: 'var(--cyan)', size: 5, yOffset: -60, xOffset: 12 },
+  { left: '65%', delay: 0.25, color: 'var(--accent-bright)', size: 3, yOffset: -48, xOffset: -10 },
+  { left: '75%', delay: 0.3, color: 'var(--cyan)', size: 4, yOffset: -52, xOffset: 18 },
+  { left: '50%', delay: 0.12, color: '#fff', size: 2, yOffset: -65, xOffset: 0 },
+  { left: '40%', delay: 0.22, color: 'var(--cyan)', size: 3, yOffset: -42, xOffset: -20 },
+]
+
 function Sparkles({ active }: { active: boolean }) {
   if (!active) return null
-  const particles = Array.from({ length: 6 }, (_, i) => ({
-    left: `${20 + Math.random() * 60}%`,
-    delay: i * 0.1,
-    color: i % 2 === 0 ? 'var(--cyan)' : 'var(--accent-bright)',
-    size: 3 + Math.random() * 3,
-    yOffset: -40 - Math.random() * 30,
-    xOffset: (Math.random() - 0.5) * 40,
-  }))
 
   return (
     <>
-      {particles.map((p, i) => (
+      {sparkleConfigs.map((p, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full pointer-events-none"
+          className="absolute rounded-full pointer-events-none z-10"
           style={{
             left: p.left,
-            top: 0,
+            top: -2,
             width: p.size,
             height: p.size,
             background: p.color,
+            boxShadow: `0 0 6px ${p.color}`,
           }}
           initial={{ y: 0, opacity: 0, scale: 0 }}
           animate={{
             y: p.yOffset,
             x: p.xOffset,
-            opacity: [0, 1, 0],
-            scale: [0, 1, 0],
+            opacity: [0, 1, 1, 0],
+            scale: [0, 1.2, 1, 0],
           }}
-          transition={{ duration: 0.8, delay: p.delay, ease: 'easeOut' }}
+          transition={{ duration: 1, delay: p.delay, ease: 'easeOut' }}
         />
       ))}
     </>

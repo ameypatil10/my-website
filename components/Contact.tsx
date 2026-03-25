@@ -59,6 +59,7 @@ export default function Contact() {
           title="Let's Build Something Together"
           subtitle="Whether you want to discuss AI, explore collaboration, or just say hello."
           className="text-center [&_p]:mx-auto"
+          reveal={false}
         />
 
         <motion.div

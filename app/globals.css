@@ -21,9 +21,21 @@
   --glow-cyan: rgba(0, 212, 255, 0.1);
 }
 
-/* Smooth scroll */
+/* Smooth scroll with snap */
 html {
   scroll-behavior: smooth;
+}
+
+/* Scroll snap on sections — proximity mode for magnetic pull without being rigid */
+@media (min-width: 768px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+  section[id] {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    scroll-margin-top: 60px;
+  }
 }
 
 /* Selection color */

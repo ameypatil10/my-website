@@ -12,7 +12,7 @@ export function TextReveal({ text, className = '', as: Tag = 'h2' }: TextRevealP
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start 0.9', 'start 0.3'],
+    offset: ['start 0.95', 'start 0.5'],
   })
 
   const words = text.split(' ')

@@ -10,7 +10,7 @@ export default function Footer() {
       whileInView={{ opacity: 1 }}
       viewport={viewportConfig}
       transition={{ duration: 0.6 }}
-      className="max-w-[1200px] mx-auto px-6 md:px-12 py-8 border-t flex justify-between items-center"
+      className="max-w-[1200px] mx-auto px-6 md:px-12 py-12 md:py-16 border-t flex justify-between items-center"
       style={{ borderColor: "var(--border)" }}
     >
       <span className="text-[13px] text-foreground-dim">
