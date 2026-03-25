@@ -12,13 +12,7 @@ export default function About() {
     <section id="about" className="px-5 md:px-12 py-[60px] md:py-[100px] max-w-[1200px] mx-auto relative">
       <SectionHeader
         label="// About"
-        title={
-          <>
-            A technologist obsessed with
-            <br />
-            solving hard AI problems
-          </>
-        }
+        title="A technologist obsessed with solving hard AI problems"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-[60px] mt-12 items-start">

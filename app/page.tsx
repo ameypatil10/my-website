@@ -1,3 +1,4 @@
+import { BackgroundGradient } from "@/components/ui/BackgroundGradient"
 import Navigation from "@/components/Navigation"
 import Hero from "@/components/Hero"
 import WizzMe from "@/components/WizzMe"
@@ -16,6 +17,7 @@ import CustomCursor from "@/components/ui/CustomCursor"
 export default function Home() {
   return (
     <>
+      <BackgroundGradient />
       <CustomCursor />
       <Navigation />
       <Hero />

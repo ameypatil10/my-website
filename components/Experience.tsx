@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { experience } from '@/lib/data'
-import { staggerContainer, cardReveal, fadeUp, itemPop, viewportConfig, springConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, fadeUp, tagRipple, viewportConfig, springConfig } from '@/lib/animations'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 function ShimmerBorderCard({ children, className, style, ...props }: {
@@ -237,7 +237,7 @@ export default function Experience() {
                   {role.tags.length > 0 && (
                     <motion.div
                       className="flex flex-wrap gap-[6px] mt-[14px]"
-                      variants={staggerContainer(50)}
+                      variants={staggerContainer(60)}
                       initial="initial"
                       whileInView="animate"
                       viewport={viewportConfig}
@@ -245,7 +245,7 @@ export default function Experience() {
                       {role.tags.map((tag, ti) => (
                         <motion.span
                           key={ti}
-                          variants={itemPop}
+                          variants={tagRipple}
                           className="text-[11px] font-medium font-mono px-[10px] py-1 rounded-full border"
                           style={
                             tag.color === 'cyan'

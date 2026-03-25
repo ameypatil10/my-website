@@ -5,8 +5,9 @@ import { motion } from 'framer-motion'
 import { Layers, Globe, MessageSquare, Image, BarChart3, Rocket } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { skills } from '@/lib/data'
-import { staggerContainer, cardReveal, itemPop, fadeUp, viewportConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, tagRipple, fadeUp, viewportConfig } from '@/lib/animations'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
+import { useMagnetic } from '@/hooks/useMagnetic'
 
 const iconMap: Record<string, React.ElementType> = {
   Layers,
@@ -22,6 +23,7 @@ function SkillCard({ skill, index }: { skill: typeof skills[0]; index: number })
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
   const isTouch = useIsTouchDevice()
+  const { ref: magneticRef, position, handleMouseMove: magneticMouseMove, handleMouseLeave: magneticMouseLeave } = useMagnetic(0.15)
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -32,122 +34,121 @@ function SkillCard({ skill, index }: { skill: typeof skills[0]; index: number })
     const rotateX = ((y - centerY) / centerY) * -8
     const rotateY = ((x - centerX) / centerX) * 8
     setTilt({ x: rotateX, y: rotateY })
-  }, [])
+    magneticMouseMove(e)
+  }, [magneticMouseMove])
 
   const handleMouseEnter = useCallback(() => setIsHovered(true), [])
   const handleMouseLeave = useCallback(() => {
     setTilt({ x: 0, y: 0 })
     setIsHovered(false)
-  }, [])
+    magneticMouseLeave()
+  }, [magneticMouseLeave])
 
   return (
-    <motion.div
-      variants={cardReveal}
-      className="relative overflow-hidden rounded-[16px] border p-7 transition-all duration-400 ease-expo-out group"
-      style={{
-        background: 'var(--bg-card)',
-        borderColor: 'var(--border)',
-        transform: isTouch ? undefined : `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease',
-      }}
+    <div
+      ref={magneticRef}
       onMouseMove={isTouch ? undefined : handleMouseMove}
       onMouseEnter={isTouch ? undefined : handleMouseEnter}
       onMouseLeave={isTouch ? undefined : handleMouseLeave}
-      whileHover={{
-        y: -3,
-        boxShadow: '0 12px 40px rgba(0,0,0,0.3)',
-        borderColor: 'rgba(255,255,255,0.12)',
-      }}
     >
-      {/* Top gradient line */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          background: 'linear-gradient(90deg, var(--accent), var(--cyan))',
-        }}
-      />
-
-      {/* Icon with hover rotation/pulse */}
-      <div
-        className="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4 border transition-transform duration-300"
-        style={{
-          background: 'rgba(94,106,210,0.1)',
-          borderColor: 'rgba(94,106,210,0.15)',
-          transform: isHovered ? 'rotate(8deg) scale(1.1)' : 'rotate(0deg) scale(1)',
-        }}
-      >
-        {Icon && <Icon size={20} className="text-accent-bright" />}
-      </div>
-
-      {/* Name */}
-      <h3 className="text-[16px] font-bold text-foreground tracking-[-0.3px]">
-        {skill.name}
-      </h3>
-
-      {/* Skill bar with glow trail */}
-      <div className="flex items-center gap-2 mt-2">
-        <div
-          className="flex-1 h-[3px] rounded-[2px] overflow-hidden relative"
-          style={{ background: 'var(--surface)' }}
-        >
-          <motion.div
-            className="h-full rounded-[2px] relative"
-            style={{
-              background: 'linear-gradient(90deg, var(--accent), var(--cyan))',
-            }}
-            initial={{ width: 0 }}
-            whileInView={{ width: `${skill.level}%` }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* Glow trail at leading edge */}
-            <div
-              className="absolute right-0 top-1/2 -translate-y-1/2 w-6 h-4 rounded-full"
-              style={{
-                background: 'radial-gradient(ellipse at center, rgba(0,212,255,0.6) 0%, transparent 70%)',
-                filter: 'blur(3px)',
-              }}
-            />
-          </motion.div>
-        </div>
-        <span className="text-[11px] text-accent-bright font-mono font-medium">
-          {skill.levelLabel}
-        </span>
-      </div>
-
-      {/* Items — staggered itemPop */}
       <motion.div
-        className="flex flex-wrap gap-[6px] mt-[14px]"
-        variants={staggerContainer(40)}
-        initial="initial"
-        whileInView="animate"
-        viewport={viewportConfig}
+        variants={cardReveal}
+        className="relative overflow-hidden rounded-[16px] border p-7 transition-all duration-400 ease-expo-out group"
+        style={{
+          background: 'var(--bg-card)',
+          borderColor: 'var(--border)',
+          transform: isTouch
+            ? undefined
+            : `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translate(${position.x}px, ${position.y}px)`,
+          transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease',
+        }}
+        whileHover={{
+          y: -3,
+          boxShadow: '0 12px 40px rgba(0,0,0,0.3)',
+          borderColor: 'rgba(255,255,255,0.12)',
+        }}
       >
-        {skill.items.map((item, ii) => (
-          <motion.span
-            key={ii}
-            variants={itemPop}
-            className="text-[11px] text-foreground-muted font-medium px-[10px] py-[3px] rounded-full"
+        {/* Top gradient line */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{
+            background: 'linear-gradient(90deg, var(--accent), var(--cyan))',
+          }}
+        />
+
+        {/* Icon with hover rotation/pulse */}
+        <div
+          className="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4 border transition-transform duration-300"
+          style={{
+            background: 'rgba(94,106,210,0.1)',
+            borderColor: 'rgba(94,106,210,0.15)',
+            transform: isHovered ? 'rotate(8deg) scale(1.1)' : 'rotate(0deg) scale(1)',
+          }}
+        >
+          {Icon && <Icon size={20} className="text-accent-bright" />}
+        </div>
+
+        {/* Name */}
+        <h3 className="text-[16px] font-bold text-foreground tracking-[-0.3px]">
+          {skill.name}
+        </h3>
+
+        {/* Skill bar with liquid fill */}
+        <div className="flex items-center gap-2 mt-2">
+          <div
+            className="flex-1 h-[3px] rounded-[2px] overflow-hidden relative"
             style={{ background: 'var(--surface)' }}
           >
-            {item}
-          </motion.span>
-        ))}
-      </motion.div>
+            <motion.div
+              className="h-full rounded-[2px] skill-bar-fill"
+              initial={{ width: 0 }}
+              whileInView={{ width: `${skill.level}%` }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {/* Shimmer overlay */}
+              <div className="skill-bar-shimmer" />
+            </motion.div>
+          </div>
+          <span className="text-[11px] text-accent-bright font-mono font-medium">
+            {skill.levelLabel}
+          </span>
+        </div>
 
-      {/* Highlight */}
-      <motion.div
-        variants={fadeUp}
-        initial="initial"
-        whileInView="animate"
-        viewport={viewportConfig}
-        className="text-[12px] text-foreground-dim mt-[14px] pt-[14px] leading-[1.5]"
-        style={{ borderTop: '1px solid var(--border)' }}
-      >
-        <strong className="text-cyan font-semibold">{skill.highlight}</strong>{' '}
-        {skill.highlightAccent}
+        {/* Items — staggered tagRipple */}
+        <motion.div
+          className="flex flex-wrap gap-[6px] mt-[14px]"
+          variants={staggerContainer(60)}
+          initial="initial"
+          whileInView="animate"
+          viewport={viewportConfig}
+        >
+          {skill.items.map((item, ii) => (
+            <motion.span
+              key={ii}
+              variants={tagRipple}
+              className="text-[11px] text-foreground-muted font-medium px-[10px] py-[3px] rounded-full"
+              style={{ background: 'var(--surface)' }}
+            >
+              {item}
+            </motion.span>
+          ))}
+        </motion.div>
+
+        {/* Highlight */}
+        <motion.div
+          variants={fadeUp}
+          initial="initial"
+          whileInView="animate"
+          viewport={viewportConfig}
+          className="text-[12px] text-foreground-dim mt-[14px] pt-[14px] leading-[1.5]"
+          style={{ borderTop: '1px solid var(--border)' }}
+        >
+          <strong className="text-cyan font-semibold">{skill.highlight}</strong>{' '}
+          {skill.highlightAccent}
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
 

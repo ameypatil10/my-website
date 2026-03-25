@@ -4,8 +4,9 @@ import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { MessageCircle, Mic, Users, TrendingUp } from 'lucide-react'
 import { wizzme } from '@/lib/data'
-import { staggerContainer, cardReveal, fadeUp, itemPop, textSlideUp, viewportConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, fadeUp, tagRipple, textSlideUp, viewportConfig } from '@/lib/animations'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
+import { useMagnetic } from '@/hooks/useMagnetic'
 
 const iconMap: Record<string, React.ElementType> = {
   MessageCircle,
@@ -26,6 +27,7 @@ function PillarCard({ pillar, index }: { pillar: typeof wizzme.pillars[0]; index
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
   const isTouch = useIsTouchDevice()
+  const { ref: magneticRef, position, handleMouseMove: magneticMouseMove, handleMouseLeave: magneticMouseLeave } = useMagnetic(0.2)
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -36,30 +38,35 @@ function PillarCard({ pillar, index }: { pillar: typeof wizzme.pillars[0]; index
     const rotateX = ((y - centerY) / centerY) * -6
     const rotateY = ((x - centerX) / centerX) * 6
     setTilt({ x: rotateX, y: rotateY })
-  }, [])
+    magneticMouseMove(e)
+  }, [magneticMouseMove])
 
   const handleMouseEnter = useCallback(() => setIsHovered(true), [])
   const handleMouseLeave = useCallback(() => {
     setTilt({ x: 0, y: 0 })
     setIsHovered(false)
-  }, [])
+    magneticMouseLeave()
+  }, [magneticMouseLeave])
 
   const gradient = gradientMap[pillar.gradient] || gradientMap['from-accent to-accent-bright']
 
   return (
+    <div
+      ref={magneticRef}
+      onMouseMove={isTouch ? undefined : handleMouseMove}
+      onMouseEnter={isTouch ? undefined : handleMouseEnter}
+      onMouseLeave={isTouch ? undefined : handleMouseLeave}
+    >
     <motion.div
       variants={cardReveal}
       className="relative overflow-hidden rounded-[20px] border p-6 sm:p-8 transition-all duration-400 ease-expo-out group"
       style={{
         background: 'var(--bg-card)',
         borderColor: isHovered ? 'rgba(255,255,255,0.12)' : 'var(--border)',
-        transform: isTouch ? undefined : `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transform: isTouch ? undefined : `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translate(${position.x}px, ${position.y}px)`,
         transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease',
         boxShadow: isHovered ? '0 12px 40px rgba(0,0,0,0.3)' : 'none',
       }}
-      onMouseMove={isTouch ? undefined : handleMouseMove}
-      onMouseEnter={isTouch ? undefined : handleMouseEnter}
-      onMouseLeave={isTouch ? undefined : handleMouseLeave}
     >
       {/* Top-left gradient accent bar */}
       <div
@@ -106,6 +113,7 @@ function PillarCard({ pillar, index }: { pillar: typeof wizzme.pillars[0]; index
         {pillar.description}
       </p>
     </motion.div>
+    </div>
   )
 }
 
@@ -271,7 +279,7 @@ export default function WizzMe() {
             {wizzme.features.map((feature, i) => (
               <motion.span
                 key={i}
-                variants={itemPop}
+                variants={tagRipple}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] text-foreground-muted border"
                 style={{
                   background: 'var(--bg-card)',

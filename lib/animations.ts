@@ -55,3 +55,11 @@ export const viewportConfigEager = { once: true, amount: 0.05 } as const
 
 export const springConfig = { stiffness: 200, damping: 15 }
 export const bouncySpring = { type: 'spring' as const, stiffness: 300, damping: 20 }
+
+export const tagRipple = {
+  initial: { opacity: 0, scale: 0.6, y: 12 },
+  animate: {
+    opacity: 1, scale: 1, y: 0,
+    transition: { type: 'spring' as const, stiffness: 400, damping: 15 }
+  },
+}

@@ -7,8 +7,9 @@ import { navLinks, socialLinks } from "@/lib/data"
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
-  const { scrollY } = useScroll()
+  const { scrollY, scrollYProgress } = useScroll()
   const bgOpacity = useTransform(scrollY, [0, 500], [0, 0.7])
+  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   // Active section detection via Intersection Observer
   useEffect(() => {
@@ -111,6 +112,15 @@ export default function Navigation() {
             Get in Touch
           </a>
         </div>
+
+        {/* Scroll progress bar */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-[2px] origin-left"
+          style={{
+            scaleX,
+            background: 'linear-gradient(90deg, var(--accent), var(--cyan))',
+          }}
+        />
 
         {/* Mobile hamburger */}
         <button
