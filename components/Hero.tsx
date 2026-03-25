@@ -208,15 +208,15 @@ export default function Hero() {
               </span>
             ))}
 
-          {/* Orbital rings */}
+          {/* Orbital rings — large enough to frame content, not overlap it */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             {/* Outer ring */}
             <div
               className="absolute rounded-full border"
               style={{
-                width: isMobile ? '340px' : '650px',
-                height: isMobile ? '340px' : '650px',
-                borderColor: 'rgba(94,106,210,0.12)',
+                width: isMobile ? '380px' : '750px',
+                height: isMobile ? '380px' : '750px',
+                borderColor: 'rgba(94,106,210,0.1)',
                 animation: 'spin-slow 60s linear infinite',
                 willChange: 'transform',
               }}
@@ -225,13 +225,13 @@ export default function Hero() {
               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan/50" style={{ boxShadow: '0 0 6px var(--cyan)' }} />
               <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent-bright/40" style={{ boxShadow: '0 0 6px var(--accent-bright)' }} />
             </div>
-            {/* Inner ring — rotates opposite direction */}
+            {/* Inner ring — must clear the name+subtitle area (~300px) */}
             <div
               className="absolute rounded-full border"
               style={{
-                width: isMobile ? '220px' : '480px',
-                height: isMobile ? '220px' : '480px',
-                borderColor: 'rgba(0,212,255,0.08)',
+                width: isMobile ? '300px' : '560px',
+                height: isMobile ? '300px' : '560px',
+                borderColor: 'rgba(0,212,255,0.07)',
                 animation: 'spin-slow 45s linear infinite reverse',
                 willChange: 'transform',
               }}
