@@ -26,8 +26,8 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Scroll snap on sections — proximity mode for magnetic pull without being rigid */
-@media (min-width: 768px) {
+/* Scroll snap — desktop only, proximity mode for subtle magnetic pull */
+@media (min-width: 1024px) {
   html {
     scroll-snap-type: y proximity;
   }
@@ -36,6 +36,15 @@ html {
     scroll-snap-stop: normal;
     scroll-margin-top: 60px;
   }
+}
+
+/* Prevent horizontal overflow on mobile from animations */
+body {
+  overflow-x: hidden;
+}
+
+section {
+  overflow-x: clip;
 }
 
 /* Selection color */
