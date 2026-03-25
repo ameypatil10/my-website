@@ -163,14 +163,21 @@ export default function WizzMe() {
           <motion.h2
             variants={fadeUp}
             className="text-[48px] md:text-[64px] font-extrabold tracking-[-2px] leading-none mt-6"
-            style={{
-              background: 'linear-gradient(135deg, #5E6AD2 0%, #00d4ff 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
           >
-            WizzMe
+            <a
+              href="https://beta.wizzme.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity duration-250"
+              style={{
+                background: 'linear-gradient(135deg, #5E6AD2 0%, #00d4ff 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              WizzMe
+            </a>
           </motion.h2>
 
           {/* Tagline */}

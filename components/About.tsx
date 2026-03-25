@@ -30,7 +30,7 @@ export default function About() {
             platform spanning <strong className="text-foreground font-semibold">11 Indian languages</strong>{' '}
             to FK-GPT, where the 8B model outperformed GPT-4o-mini and the 70B achieved parity with GPT-4o
             on e-commerce tasks at 3x lower cost. Now, as Co-Founder &amp; CTO of{' '}
-            <strong className="text-foreground font-semibold">WizzMe</strong>, I&apos;m applying{' '}
+            <a href="https://beta.wizzme.ai" target="_blank" rel="noopener noreferrer" className="text-foreground font-semibold hover:text-accent-bright transition-colors duration-250">WizzMe</a>, I&apos;m applying{' '}
             <strong className="text-foreground font-semibold">first-principles thinking</strong> to
             reinvent how people access trusted knowledge from their networks.
             <br /><br />

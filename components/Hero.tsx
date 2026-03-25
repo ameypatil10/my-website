@@ -202,7 +202,7 @@ export default function Hero() {
           className="text-[20px] text-foreground-muted mt-4"
         >
           Co-Founder &amp; CTO @{" "}
-          <span className="text-accent-bright font-medium">WizzMe</span>{" "}
+          <a href="https://beta.wizzme.ai" target="_blank" rel="noopener noreferrer" className="text-accent-bright font-medium hover:text-cyan transition-colors duration-250">WizzMe</a>{" "}
           &middot; AI &amp; LLM Expert &middot; Published Researcher
         </motion.p>
 
