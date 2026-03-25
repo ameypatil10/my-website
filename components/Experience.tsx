@@ -1,11 +1,49 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { experience } from '@/lib/data'
 import { staggerContainer, fadeUp, viewportConfig, springConfig } from '@/lib/animations'
+
+function ShimmerBorderCard({ children, className, style, ...props }: {
+  children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
+  [key: string]: unknown
+}) {
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <motion.div
+      className={`relative ${className ?? ''}`}
+      style={{
+        ...style,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      {...props}
+    >
+      {/* Shimmer border overlay */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 rounded-[16px] pointer-events-none"
+          style={{
+            padding: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(94,106,210,0.3), rgba(0,212,255,0.3), transparent)',
+            backgroundSize: '200% 100%',
+            animation: 'shimmer-border 1.5s linear infinite',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude',
+          }}
+        />
+      )}
+      {children}
+    </motion.div>
+  )
+}
 
 export default function Experience() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -39,7 +77,7 @@ export default function Experience() {
             {/* Group header */}
             <ScrollReveal>
               <div className="flex items-center gap-4 mb-5 relative">
-                {/* Group dot */}
+                {/* Group dot with pulse ring animation */}
                 <motion.div
                   className="absolute -left-8 w-4 h-4 rounded-full border-[3px]"
                   style={{
@@ -53,7 +91,43 @@ export default function Experience() {
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ type: 'spring', ...springConfig }}
-                />
+                >
+                  {/* Expanding pulse ring */}
+                  <motion.span
+                    className="absolute inset-[-4px] rounded-full border-2"
+                    style={{
+                      borderColor: group.dotColor === 'cyan' ? 'var(--cyan)' : 'var(--accent)',
+                    }}
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    whileInView={{
+                      scale: [1, 2.5],
+                      opacity: [0.5, 0],
+                    }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 1.2,
+                      delay: 0.3,
+                      ease: 'easeOut',
+                    }}
+                  />
+                  <motion.span
+                    className="absolute inset-[-4px] rounded-full border-2"
+                    style={{
+                      borderColor: group.dotColor === 'cyan' ? 'var(--cyan)' : 'var(--accent)',
+                    }}
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    whileInView={{
+                      scale: [1, 2.5],
+                      opacity: [0.4, 0],
+                    }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 1.2,
+                      delay: 0.6,
+                      ease: 'easeOut',
+                    }}
+                  />
+                </motion.div>
 
                 <span className="text-[22px] font-bold text-foreground tracking-[-0.5px]">
                   {group.company}
@@ -75,7 +149,7 @@ export default function Experience() {
               viewport={viewportConfig}
             >
               {group.roles.map((role, ri) => (
-                <motion.div
+                <ShimmerBorderCard
                   key={ri}
                   variants={fadeUp}
                   className="mb-4 relative rounded-[16px] border transition-all duration-400 ease-expo-out"
@@ -176,7 +250,7 @@ export default function Experience() {
                       ))}
                     </div>
                   )}
-                </motion.div>
+                </ShimmerBorderCard>
               ))}
             </motion.div>
           </div>

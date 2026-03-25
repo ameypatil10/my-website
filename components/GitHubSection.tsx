@@ -37,7 +37,7 @@ export default function GitHubSection() {
             target="_blank"
             rel="noopener noreferrer"
             variants={fadeUp}
-            className="block relative overflow-hidden rounded-[16px] border p-6 transition-all duration-300"
+            className="shine-card group block relative overflow-hidden rounded-[16px] border p-6 transition-all duration-300"
             style={{
               background: "var(--bg-card)",
               borderColor: "var(--border)",
@@ -55,8 +55,9 @@ export default function GitHubSection() {
               {repo.description}
             </p>
             <div className="flex items-center gap-2 mt-3">
+              {/* Language dot with pulse on card hover */}
               <span
-                className="w-2 h-2 rounded-full shrink-0"
+                className="w-2 h-2 rounded-full shrink-0 group-hover:animate-[lang-dot-pulse_1s_ease-in-out_infinite]"
                 style={{ background: repo.languageColor }}
               />
               <span className="text-[12px] text-foreground-dim">

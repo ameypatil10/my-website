@@ -6,8 +6,35 @@ import { navLinks, socialLinks } from "@/lib/data"
 
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState("")
   const { scrollY } = useScroll()
   const bgOpacity = useTransform(scrollY, [0, 500], [0, 0.7])
+
+  // Active section detection via Intersection Observer
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const sectionIds = navLinks.map((l) => l.href.slice(1))
+    const observers: IntersectionObserver[] = []
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(id)
+            }
+          })
+        },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      )
+      observer.observe(el)
+      observers.push(observer)
+    })
+
+    return () => observers.forEach((o) => o.disconnect())
+  }, [])
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -57,11 +84,11 @@ export default function Navigation() {
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="nav-link relative"
+              className={`nav-glow-link relative ${activeSection === link.href.slice(1) ? "active" : ""}`}
               style={{
                 fontSize: 13,
                 fontWeight: 500,
-                color: "var(--foreground-muted)",
+                color: activeSection === link.href.slice(1) ? "var(--foreground)" : "var(--foreground-muted)",
                 transition: "color 0.25s",
               }}
             >
@@ -162,26 +189,6 @@ export default function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Nav link hover underline styles */}
-      <style jsx global>{`
-        .nav-link:hover {
-          color: var(--foreground) !important;
-        }
-        .nav-link::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: -2px;
-          width: 0;
-          height: 1px;
-          background: var(--accent-bright);
-          transition: width 0.25s ease;
-        }
-        .nav-link:hover::after {
-          width: 100%;
-        }
-      `}</style>
     </>
   )
 }

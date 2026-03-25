@@ -20,9 +20,9 @@ export const navLinks: NavLink[] = [
 
 export const stats: StatCard[] = [
   { numericEnd: 5, suffix: '+', label: 'Years in AI/ML' },
-  { numericEnd: 11, suffix: '', label: 'Languages Translated' },
-  { numericEnd: 3, suffix: '', label: 'Top-Tier Publications' },
-  { numericEnd: 8, suffix: 'x', label: 'LLM Cost Savings' },
+  { numericEnd: 65, suffix: '', label: 'JEE Adv. AIR' },
+  { numericEnd: 4, suffix: '', label: 'Top-Tier Publications' },
+  { numericEnd: 3, suffix: 'x', label: 'LLM Cost Savings' },
 ]
 
 export const experience: ExperienceGroup[] = [
@@ -32,7 +32,7 @@ export const experience: ExperienceGroup[] = [
     dotColor: 'cyan',
     roles: [
       {
-        title: 'Co-Founder & Tech Lead',
+        title: 'Co-Founder & CTO',
         period: 'Dec 2025 — Present · Bangalore',
         description: '',
         projects: [
@@ -73,7 +73,7 @@ export const experience: ExperienceGroup[] = [
         period: 'Oct 2023 — Feb 2025 · 1 yr 5 mos',
         description: '',
         projects: [
-          { name: 'FK-GPT Foundational LLM', detail: '', color: 'cyan' },
+          { name: 'FK-GPT Foundational LLM', detail: '8B outperformed GPT-4o-mini; 70B achieved GPT-4o parity on e-commerce. 3x cost savings vs commercial LLMs.', color: 'cyan' },
           { name: 'GenAI Chatbot Flippi', detail: '', color: 'indigo' },
         ],
         tags: [
@@ -161,8 +161,8 @@ export const skills: Skill[] = [
     level: 95,
     levelLabel: 'Expert',
     items: ['RLHF', 'DPO', 'GRPO', 'SFT', 'Synthetic Data', 'Evaluation'],
-    highlight: 'FK-GPT 8B',
-    highlightAccent: 'outperformed ChatGPT-3.5 on e-commerce',
+    highlight: 'FK-GPT',
+    highlightAccent: '8B outperformed GPT-4o-mini · 70B on parity with GPT-4o',
   },
   {
     iconName: 'Globe',
@@ -240,12 +240,22 @@ export const publications: Publication[] = [
     authors: 'Amey Patil, Tejpalsingh Siledar, Banerjee, Sudhanshu S. Singh, M. Chelliah, N. Garera, Bhattacharyya',
     authorHighlight: 'Amey Patil',
     abstract: '',
-    link: 'https://aclanthology.org/volumes/2024.findings-naacl/',
+    link: 'https://aclanthology.org/2024.findings-naacl.150/',
+  },
+  {
+    venue: 'EMNLP 2023',
+    venueType: 'findings',
+    year: 2023,
+    title: 'Synthesize, if you do not have: Effective Synthetic Dataset Creation Strategies for Self-Supervised Opinion Summarization in E-commerce',
+    authors: 'Tejpalsingh Siledar, Suman Banerjee, Amey Patil, Sudhanshu Singh, M. Chelliah, N. Garera, Bhattacharyya',
+    authorHighlight: 'Amey Patil',
+    abstract: '',
+    link: 'https://aclanthology.org/2023.findings-emnlp.899/',
   },
 ]
 
 export const awards: Award[] = [
-  { year: '2024', name: 'Flipkart Value Champion', description: 'Building FK-GPT with 8x cost savings' },
+  { year: '2024', name: 'Flipkart Value Champion', description: 'Building FK-GPT with 3x cost savings vs commercial LLMs' },
   { year: '2023', name: 'Ace Alliance — Best DS Team', description: 'Exceptional contribution to Flippi chatbot and semantic search' },
   { year: '2022', name: 'Flipkart Innovation Award', description: 'Machine translation platform for 11 Indian languages' },
   { year: '2021', name: 'Flipkart Innovation Award', description: "Translation platform expanding reach to India's linguistic communities" },

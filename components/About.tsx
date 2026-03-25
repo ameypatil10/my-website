@@ -28,11 +28,11 @@ export default function About() {
             Over <strong className="text-foreground font-semibold">5+ years at Flipkart</strong>,
             I built AI systems that serve hundreds of millions of users — from a machine translation
             platform spanning <strong className="text-foreground font-semibold">11 Indian languages</strong>{' '}
-            to FK-GPT, an 8-billion-parameter LLM that outperformed ChatGPT-3.5 on e-commerce tasks
-            at 8x lower cost. Now, as co-founder of{' '}
+            to FK-GPT, where the 8B model outperformed GPT-4o-mini and the 70B achieved parity with GPT-4o
+            on e-commerce tasks at 3x lower cost. Now, as Co-Founder &amp; CTO of{' '}
             <strong className="text-foreground font-semibold">WizzMe</strong>, I&apos;m applying{' '}
             <strong className="text-foreground font-semibold">first-principles thinking</strong> to
-            reinvent how people connect through AI-powered social experiences.
+            reinvent how people access trusted knowledge from their networks.
             <br /><br />
             My research has been published at{' '}
             <strong className="text-foreground font-semibold">ACL, EMNLP, and NAACL</strong> — the

@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect, useCallback, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ChevronDown, Mail } from "lucide-react"
 import FloatingOrbs from "@/components/ui/FloatingOrbs"
@@ -24,16 +25,73 @@ const childVariants = {
   },
 }
 
+// Typewriter hook
+function useTypewriter(text: string, speed = 35, startDelay = 1200) {
+  const [displayed, setDisplayed] = useState("")
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    // Respect reduced motion
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (mq.matches) {
+      setDisplayed(text)
+      setDone(true)
+      return
+    }
+
+    let i = 0
+    const timeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        i++
+        setDisplayed(text.slice(0, i))
+        if (i >= text.length) {
+          clearInterval(interval)
+          setDone(true)
+        }
+      }, speed)
+      return () => clearInterval(interval)
+    }, startDelay)
+
+    return () => clearTimeout(timeout)
+  }, [text, speed, startDelay])
+
+  return { displayed, done }
+}
+
 export default function Hero() {
   const { scrollY } = useScroll()
   const contentY = useTransform(scrollY, [0, 500], [0, -100])
   const orbsY = useTransform(scrollY, [0, 500], [0, -250])
   const scrollIndicatorOpacity = useTransform(scrollY, [0, 200], [1, 0])
 
+  const heroDescription =
+    "Transforming how people capture, share, and consume knowledge through AI-native platforms. 5+ years building foundational LLMs, conversational AI, and large-scale NLP systems."
+  const { displayed: typedText, done: typingDone } = useTypewriter(heroDescription, 25, 1400)
+
+  // Mouse-follow glow
+  const sectionRef = useRef<HTMLElement>(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [mouseInSection, setMouseInSection] = useState(false)
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (sectionRef.current) {
+      const rect = sectionRef.current.getBoundingClientRect()
+      setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+      setMouseInSection(true)
+    }
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    setMouseInSection(false)
+  }, [])
+
   return (
     <section
+      ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ padding: "120px 48px 80px" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Hero background */}
       <div
@@ -47,6 +105,23 @@ export default function Hero() {
           `,
         }}
       />
+
+      {/* Mouse-follow glow cursor */}
+      {mouseInSection && (
+        <div
+          className="absolute pointer-events-none z-[5] transition-opacity duration-300"
+          style={{
+            left: mousePos.x - 200,
+            top: mousePos.y - 200,
+            width: 400,
+            height: 400,
+            background:
+              "radial-gradient(circle, rgba(94,106,210,0.08) 0%, rgba(0,212,255,0.04) 30%, transparent 70%)",
+            borderRadius: "50%",
+            filter: "blur(20px)",
+          }}
+        />
+      )}
 
       {/* Hero grid overlay */}
       <div
@@ -75,16 +150,31 @@ export default function Hero() {
         initial="initial"
         animate="animate"
       >
-        {/* Badge */}
+        {/* Badge with glow pulse halo */}
         <motion.div variants={childVariants} className="flex justify-center">
           <div
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full relative"
             style={{
               background: "rgba(94,106,210,0.08)",
               border: "1px solid rgba(94,106,210,0.15)",
             }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse" />
+            {/* Glow halo rings around the dot */}
+            <span className="relative w-1.5 h-1.5">
+              <span className="absolute inset-0 rounded-full bg-cyan animate-pulse" />
+              <span
+                className="absolute inset-[-3px] rounded-full border border-cyan/40"
+                style={{ animation: "glow-ring 2s ease-out infinite" }}
+              />
+              <span
+                className="absolute inset-[-3px] rounded-full border border-cyan/30"
+                style={{ animation: "glow-ring 2s ease-out infinite 0.6s" }}
+              />
+              <span
+                className="absolute inset-[-3px] rounded-full border border-cyan/20"
+                style={{ animation: "glow-ring 2s ease-out infinite 1.2s" }}
+              />
+            </span>
             <span className="text-[12px] font-medium tracking-[1.5px] uppercase text-accent-bright">
               Building the future of knowledge networks
             </span>
@@ -111,29 +201,33 @@ export default function Hero() {
           variants={childVariants}
           className="text-[20px] text-foreground-muted mt-4"
         >
-          Co-Founder @{" "}
+          Co-Founder &amp; CTO @{" "}
           <span className="text-accent-bright font-medium">WizzMe</span>{" "}
           &middot; AI &amp; LLM Expert &middot; Published Researcher
         </motion.p>
 
-        {/* Description */}
+        {/* Description with typing effect */}
         <motion.p
           variants={childVariants}
           className="text-base text-foreground-dim mt-5 leading-relaxed max-w-[580px] mx-auto"
         >
-          Transforming how people capture, share, and consume knowledge through
-          AI-native platforms. 5+ years building foundational LLMs,
-          conversational AI, and large-scale NLP systems.
+          {typedText}
+          {!typingDone && (
+            <span
+              className="inline-block w-[2px] h-[1em] bg-accent-bright ml-[2px] align-middle"
+              style={{ animation: "blink-cursor 0.8s step-end infinite" }}
+            />
+          )}
         </motion.p>
 
-        {/* Buttons */}
+        {/* Buttons with shimmer effect */}
         <motion.div
           variants={childVariants}
           className="flex flex-row items-center justify-center gap-3.5 mt-9"
         >
           <a
             href="#experience"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-px"
+            className="shimmer-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-px"
             style={{
               background: "var(--accent)",
               border: "1px solid rgba(255,255,255,0.1)",
@@ -154,7 +248,7 @@ export default function Hero() {
           </a>
           <a
             href={socialLinks.email}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 hover:-translate-y-px"
+            className="shimmer-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 hover:-translate-y-px"
             style={{
               background: "var(--bg-card)",
               border: "1px solid var(--border)",

@@ -21,7 +21,7 @@ export default function Awards() {
           <motion.div
             key={i}
             variants={fadeUp}
-            className="relative overflow-hidden rounded-[16px] border p-6 transition-all duration-300 group"
+            className="spotlight-card relative overflow-hidden rounded-[16px] border p-6 transition-all duration-300 group"
             style={{
               background: "var(--bg-card)",
               borderColor: "var(--border)",
@@ -31,14 +31,28 @@ export default function Awards() {
               borderColor: "rgba(255,255,255,0.12)",
             }}
           >
-            {/* Top glow line */}
+            {/* Top glow line - animates from center outward */}
             <div
-              className="absolute top-[-1px] left-[20%] right-[20%] h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute top-[-1px] left-1/2 h-px transition-all duration-500 ease-out group-hover:opacity-100 opacity-0"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, rgba(94,106,210,0.4), transparent)",
+                width: "0%",
+                transform: "translateX(-50%)",
               }}
             />
+            {/* Use a CSS approach for center-outward animation */}
+            <div
+              className="absolute top-[-1px] left-0 right-0 h-px overflow-hidden"
+            >
+              <div
+                className="w-full h-full transition-all duration-500 ease-out origin-center scale-x-0 group-hover:scale-x-100"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent 10%, rgba(94,106,210,0.5) 40%, rgba(0,212,255,0.4) 60%, transparent 90%)",
+                }}
+              />
+            </div>
 
             <span className="font-mono text-[12px] text-accent-bright">
               {award.year}

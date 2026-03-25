@@ -21,19 +21,73 @@
   --glow-cyan: rgba(0, 212, 255, 0.1);
 }
 
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(94, 106, 210, 0.35);
+  color: #EDEDEF;
+}
+
+::-moz-selection {
+  background: rgba(94, 106, 210, 0.35);
+  color: #EDEDEF;
+}
+
 body {
   background: var(--bg-deep);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+}
+
+/* Custom cursor ring - follows mouse via JS, but we style it here */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(129, 140, 248, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease-out, opacity 0.2s ease;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background: var(--accent-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  .cursor-ring,
+  .cursor-dot {
+    display: none !important;
   }
 }
 
@@ -52,4 +106,224 @@ body {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Shimmer button effect */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transition: none;
+  pointer-events: none;
+}
+
+.shimmer-btn:hover::before {
+  animation: shimmer-sweep 0.6s ease-out forwards;
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+/* Diagonal shine sweep for cards */
+.shine-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(255, 255, 255, 0.03) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  transition: none;
+}
+
+.shine-card:hover::after {
+  animation: diagonal-shine 0.7s ease-out forwards;
+}
+
+@keyframes diagonal-shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* Gradient border animation */
+@keyframes gradient-border-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Glow pulse for contact buttons */
+@keyframes border-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(94, 106, 210, 0.15), 0 0 10px rgba(94, 106, 210, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(94, 106, 210, 0.3), 0 0 30px rgba(94, 106, 210, 0.1);
+  }
+}
+
+/* Badge glow halo */
+@keyframes glow-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Timeline dot pulse ring */
+@keyframes dot-ring-expand {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Float animation for venue badge */
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Language dot pulse */
+@keyframes lang-dot-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+}
+
+/* Shimmer border animation for experience cards */
+@keyframes shimmer-border {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Nav glow underline */
+.nav-glow-link {
+  position: relative;
+}
+
+.nav-glow-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-bright), var(--cyan));
+  border-radius: 1px;
+  transition: width 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 0px transparent;
+}
+
+.nav-glow-link:hover::after {
+  width: 100%;
+  box-shadow: 0 0 8px rgba(94, 106, 210, 0.5), 0 0 16px rgba(94, 106, 210, 0.2);
+}
+
+.nav-glow-link.active::after {
+  width: 100%;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5), 0 0 16px rgba(0, 212, 255, 0.2);
+  background: linear-gradient(90deg, var(--cyan), var(--accent-bright));
+}
+
+/* Spotlight cone effect for awards */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(94, 106, 210, 0.12) 0%,
+    transparent 70%
+  );
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Typing cursor blink */
+@keyframes blink-cursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }

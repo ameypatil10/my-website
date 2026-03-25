@@ -44,22 +44,42 @@ export default function Publications() {
           <motion.div
             key={i}
             variants={fadeUp}
-            className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-4 md:gap-6 items-start rounded-[16px] border p-6 md:p-7 transition-all duration-400 ease-expo-out"
+            className="group relative grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-4 md:gap-6 items-start rounded-[16px] p-6 md:p-7 transition-all duration-400 ease-expo-out"
             style={{
               background: 'var(--bg-card)',
-              borderColor: 'var(--border)',
             }}
             whileHover={{
               y: -2,
-              borderColor: 'rgba(255,255,255,0.12)',
               boxShadow: '0 8px 30px rgba(0,0,0,0.3)',
             }}
           >
-            {/* Venue badge */}
+            {/* Gradient border animation on hover */}
+            <div
+              className="absolute inset-0 rounded-[16px] pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+              style={{
+                padding: '1px',
+                background: 'linear-gradient(90deg, var(--accent), var(--cyan), var(--accent), var(--cyan))',
+                backgroundSize: '300% 100%',
+                animation: 'gradient-border-rotate 3s linear infinite',
+                WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                WebkitMaskComposite: 'xor',
+                maskComposite: 'exclude',
+              }}
+            />
+            {/* Static border for non-hover */}
+            <div
+              className="absolute inset-0 rounded-[16px] pointer-events-none group-hover:opacity-0 transition-opacity duration-300"
+              style={{
+                border: '1px solid var(--border)',
+              }}
+            />
+
+            {/* Venue badge with float animation */}
             <div
               className="font-mono text-[11px] font-bold uppercase tracking-[1px] rounded-[6px] border md:[writing-mode:vertical-lr] md:rotate-180"
               style={{
                 padding: '10px 8px',
+                animation: 'gentle-float 3s ease-in-out infinite',
                 ...(pub.venueType === 'main'
                   ? {
                       background: 'rgba(0,212,255,0.08)',
@@ -99,13 +119,14 @@ export default function Publications() {
               </a>
             </div>
 
-            {/* Type badge */}
+            {/* Type badge with float */}
             <span
               className="text-[10px] font-semibold px-[10px] py-1 rounded-full border whitespace-nowrap"
               style={{
                 background: 'rgba(0,212,255,0.08)',
                 color: 'var(--cyan)',
                 borderColor: 'rgba(0,212,255,0.15)',
+                animation: 'gentle-float 3.5s ease-in-out infinite 0.5s',
               }}
             >
               {venueTypeLabel[pub.venueType] ?? pub.venueType}

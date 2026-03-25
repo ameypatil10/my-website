@@ -10,10 +10,12 @@ import GitHubSection from "@/components/GitHubSection"
 import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import { SectionDivider } from "@/components/ui/SectionDivider"
+import CustomCursor from "@/components/ui/CustomCursor"
 
 export default function Home() {
   return (
     <>
+      <CustomCursor />
       <Navigation />
       <Hero />
       <SectionDivider />
