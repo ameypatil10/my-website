@@ -13,12 +13,14 @@ import Contact from "@/components/Contact"
 import Footer from "@/components/Footer"
 import { SectionDivider } from "@/components/ui/SectionDivider"
 import CustomCursor from "@/components/ui/CustomCursor"
+import { SectionSnap } from "@/components/ui/SectionSnap"
 
 export default function Home() {
   return (
     <>
       <BackgroundGradient />
       <CustomCursor />
+      <SectionSnap />
       <Navigation />
       <Hero />
       <SectionDivider />

@@ -92,6 +92,7 @@ export default function Hero() {
 
   return (
     <section
+      id="hero"
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ padding: isMobile ? "80px 20px 60px" : "120px 48px 80px" }}
