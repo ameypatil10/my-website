@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { MessageCircle, Mic, Users, TrendingUp } from 'lucide-react'
 import { wizzme } from '@/lib/data'
 import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 const iconMap: Record<string, React.ElementType> = {
   MessageCircle,
@@ -24,6 +25,7 @@ function PillarCard({ pillar, index }: { pillar: typeof wizzme.pillars[0]; index
   const Icon = iconMap[pillar.icon]
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
+  const isTouch = useIsTouchDevice()
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -47,17 +49,17 @@ function PillarCard({ pillar, index }: { pillar: typeof wizzme.pillars[0]; index
   return (
     <motion.div
       variants={fadeUp}
-      className="relative overflow-hidden rounded-[20px] border p-8 transition-all duration-400 ease-expo-out group"
+      className="relative overflow-hidden rounded-[20px] border p-6 sm:p-8 transition-all duration-400 ease-expo-out group"
       style={{
         background: 'var(--bg-card)',
         borderColor: isHovered ? 'rgba(255,255,255,0.12)' : 'var(--border)',
-        transform: `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transform: isTouch ? undefined : `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease',
         boxShadow: isHovered ? '0 12px 40px rgba(0,0,0,0.3)' : 'none',
       }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={isTouch ? undefined : handleMouseMove}
+      onMouseEnter={isTouch ? undefined : handleMouseEnter}
+      onMouseLeave={isTouch ? undefined : handleMouseLeave}
     >
       {/* Top-left gradient accent bar */}
       <div
@@ -111,7 +113,7 @@ export default function WizzMe() {
   return (
     <section
       id="wizzme"
-      className="relative px-6 md:px-12 py-[120px] overflow-hidden"
+      className="relative px-5 md:px-12 py-[80px] md:py-[120px] overflow-hidden"
     >
       {/* Background radial glow */}
       <div
@@ -162,7 +164,7 @@ export default function WizzMe() {
           {/* WizzMe title */}
           <motion.h2
             variants={fadeUp}
-            className="text-[48px] md:text-[64px] font-extrabold tracking-[-2px] leading-none mt-6"
+            className="text-[40px] sm:text-[48px] md:text-[64px] font-extrabold tracking-[-2px] leading-none mt-6"
           >
             <a
               href="https://beta.wizzme.ai"

@@ -7,7 +7,7 @@ import { staggerContainer, fadeUp, viewportConfig } from "@/lib/animations"
 
 export default function Awards() {
   return (
-    <section id="awards" className="px-6 md:px-12 py-[100px] max-w-[1200px] mx-auto relative">
+    <section id="awards" className="px-5 md:px-12 py-[60px] md:py-[100px] max-w-[1200px] mx-auto relative">
       <SectionHeader label="// Recognition" title="Awards" />
 
       <motion.div

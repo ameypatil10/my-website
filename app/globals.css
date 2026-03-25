@@ -75,6 +75,14 @@ body {
   transition: transform 0.05s ease-out;
 }
 
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse) {
+  .cursor-ring,
+  .cursor-dot {
+    display: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

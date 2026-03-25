@@ -9,7 +9,7 @@ import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
 
 export default function About() {
   return (
-    <section id="about" className="px-6 md:px-12 py-[100px] max-w-[1200px] mx-auto relative">
+    <section id="about" className="px-5 md:px-12 py-[60px] md:py-[100px] max-w-[1200px] mx-auto relative">
       <SectionHeader
         label="// About"
         title={

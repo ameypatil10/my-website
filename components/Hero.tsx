@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { ChevronDown, Mail } from "lucide-react"
 import FloatingOrbs from "@/components/ui/FloatingOrbs"
 import { socialLinks } from "@/lib/data"
+import { useIsMobile, useIsTouchDevice } from "@/hooks/useIsTouchDevice"
 
 const containerVariants = {
   initial: {},
@@ -60,8 +61,12 @@ function useTypewriter(text: string, speed = 35, startDelay = 1200) {
 
 export default function Hero() {
   const { scrollY } = useScroll()
-  const contentY = useTransform(scrollY, [0, 500], [0, -100])
-  const orbsY = useTransform(scrollY, [0, 500], [0, -250])
+  const isMobile = useIsMobile()
+  const isTouch = useIsTouchDevice()
+
+  // Reduce parallax on mobile
+  const contentY = useTransform(scrollY, [0, 500], [0, isMobile ? -40 : -100])
+  const orbsY = useTransform(scrollY, [0, 500], [0, isMobile ? -80 : -250])
   const scrollIndicatorOpacity = useTransform(scrollY, [0, 200], [1, 0])
 
   const heroDescription =
@@ -89,9 +94,9 @@ export default function Hero() {
     <section
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ padding: "120px 48px 80px" }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      style={{ padding: isMobile ? "80px 20px 60px" : "120px 48px 80px" }}
+      onMouseMove={isTouch ? undefined : handleMouseMove}
+      onMouseLeave={isTouch ? undefined : handleMouseLeave}
     >
       {/* Hero background */}
       <div
@@ -106,8 +111,8 @@ export default function Hero() {
         }}
       />
 
-      {/* Mouse-follow glow cursor */}
-      {mouseInSection && (
+      {/* Mouse-follow glow cursor — disabled on mobile/touch */}
+      {!isTouch && mouseInSection && (
         <div
           className="absolute pointer-events-none z-[5] transition-opacity duration-300"
           style={{
@@ -140,7 +145,7 @@ export default function Hero() {
       />
 
       {/* Floating orbs */}
-      <FloatingOrbs parallaxY={orbsY} />
+      <FloatingOrbs parallaxY={orbsY} isMobile={isMobile} />
 
       {/* Hero content */}
       <motion.div
@@ -153,7 +158,7 @@ export default function Hero() {
         {/* Badge with glow pulse halo */}
         <motion.div variants={childVariants} className="flex justify-center">
           <div
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full relative"
+            className="inline-flex items-center gap-2 px-3 sm:px-5 py-2 rounded-full relative"
             style={{
               background: "rgba(94,106,210,0.08)",
               border: "1px solid rgba(94,106,210,0.15)",
@@ -175,7 +180,7 @@ export default function Hero() {
                 style={{ animation: "glow-ring 2s ease-out infinite 1.2s" }}
               />
             </span>
-            <span className="text-[12px] font-medium tracking-[1.5px] uppercase text-accent-bright">
+            <span className="text-[10px] sm:text-[12px] font-medium tracking-[1px] sm:tracking-[1.5px] uppercase text-accent-bright">
               Building the future of knowledge networks
             </span>
           </div>
@@ -199,7 +204,7 @@ export default function Hero() {
         {/* Title */}
         <motion.p
           variants={childVariants}
-          className="text-[20px] text-foreground-muted mt-4"
+          className="text-[16px] sm:text-[20px] text-foreground-muted mt-4"
         >
           Co-Founder &amp; CTO @{" "}
           <a href="https://beta.wizzme.ai" target="_blank" rel="noopener noreferrer" className="text-accent-bright font-medium hover:text-cyan transition-colors duration-250">WizzMe</a>{" "}
@@ -220,14 +225,14 @@ export default function Hero() {
           )}
         </motion.p>
 
-        {/* Buttons with shimmer effect */}
+        {/* Buttons — stack vertically on mobile */}
         <motion.div
           variants={childVariants}
-          className="flex flex-row items-center justify-center gap-3.5 mt-9"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mt-9"
         >
           <a
             href="#experience"
-            className="shimmer-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-px"
+            className="shimmer-btn inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white transition-transform duration-200 hover:-translate-y-px w-full sm:w-auto"
             style={{
               background: "var(--accent)",
               border: "1px solid rgba(255,255,255,0.1)",
@@ -248,7 +253,7 @@ export default function Hero() {
           </a>
           <a
             href={socialLinks.email}
-            className="shimmer-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 hover:-translate-y-px"
+            className="shimmer-btn inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 hover:-translate-y-px w-full sm:w-auto"
             style={{
               background: "var(--bg-card)",
               border: "1px solid var(--border)",
@@ -282,15 +287,6 @@ export default function Hero() {
           Scroll
         </span>
       </motion.div>
-
-      {/* Responsive mobile padding override */}
-      <style jsx>{`
-        @media (max-width: 639px) {
-          section {
-            padding: 80px 20px 80px !important;
-          }
-        }
-      `}</style>
     </section>
   )
 }

@@ -43,7 +43,7 @@ const links = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative px-6 md:px-12 py-[100px] text-center">
+    <section id="contact" className="relative px-5 md:px-12 py-[60px] md:py-[100px] text-center">
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -62,7 +62,7 @@ export default function Contact() {
         />
 
         <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
+          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mt-10"
           variants={staggerContainer(80)}
           initial="initial"
           whileInView="animate"
@@ -76,7 +76,7 @@ export default function Contact() {
               rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
               aria-label={link.ariaLabel}
               variants={fadeUp}
-              className="group flex items-center gap-2.5 px-6 py-3.5 rounded-xl border text-[14px] font-medium text-foreground transition-all duration-300"
+              className="group flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl border text-[14px] font-medium text-foreground transition-all duration-300 w-full sm:w-auto"
               style={{
                 background: "var(--bg-card)",
                 borderColor: "var(--border)",

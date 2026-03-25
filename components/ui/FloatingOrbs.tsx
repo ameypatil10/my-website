@@ -4,6 +4,7 @@ import { motion, MotionValue } from "framer-motion"
 
 interface FloatingOrbsProps {
   parallaxY?: MotionValue<number>
+  isMobile?: boolean
 }
 
 const orbs = [
@@ -30,41 +31,44 @@ const orbs = [
   },
 ]
 
-export default function FloatingOrbs({ parallaxY }: FloatingOrbsProps) {
+export default function FloatingOrbs({ parallaxY, isMobile }: FloatingOrbsProps) {
   return (
     <motion.div
       className="absolute inset-0"
       style={{ zIndex: 1, y: parallaxY }}
     >
-      {orbs.map((orb, i) => (
-        <motion.div
-          key={i}
-          style={{
-            position: "absolute",
-            width: orb.size,
-            height: orb.size,
-            top: orb.top,
-            left: orb.left,
-            right: orb.right,
-            bottom: orb.bottom,
-            background: `radial-gradient(circle, ${orb.color} 0%, transparent 70%)`,
-            filter: "blur(60px)",
-            willChange: "transform",
-            pointerEvents: "none",
-          }}
-          animate={{
-            x: [0, 30, -20, 0],
-            y: [0, -20, 15, 0],
-            scale: [1, 1.05, 0.95, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: orb.delay,
-          }}
-        />
-      ))}
+      {orbs.map((orb, i) => {
+        const size = isMobile ? orb.size * 0.5 : orb.size
+        return (
+          <motion.div
+            key={i}
+            style={{
+              position: "absolute",
+              width: size,
+              height: size,
+              top: orb.top,
+              left: orb.left,
+              right: orb.right,
+              bottom: orb.bottom,
+              background: `radial-gradient(circle, ${orb.color} 0%, transparent 70%)`,
+              filter: "blur(60px)",
+              willChange: "transform",
+              pointerEvents: "none",
+            }}
+            animate={{
+              x: isMobile ? [0, 15, -10, 0] : [0, 30, -20, 0],
+              y: isMobile ? [0, -10, 8, 0] : [0, -20, 15, 0],
+              scale: [1, 1.05, 0.95, 1],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: orb.delay,
+            }}
+          />
+        )
+      })}
     </motion.div>
   )
 }

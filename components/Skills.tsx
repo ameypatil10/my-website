@@ -6,6 +6,7 @@ import { Layers, Globe, MessageSquare, Image, BarChart3, Rocket } from 'lucide-r
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { skills } from '@/lib/data'
 import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 const iconMap: Record<string, React.ElementType> = {
   Layers,
@@ -20,6 +21,7 @@ function SkillCard({ skill, index }: { skill: typeof skills[0]; index: number })
   const Icon = iconMap[skill.iconName]
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
+  const isTouch = useIsTouchDevice()
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -45,12 +47,12 @@ function SkillCard({ skill, index }: { skill: typeof skills[0]; index: number })
       style={{
         background: 'var(--bg-card)',
         borderColor: 'var(--border)',
-        transform: `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transform: isTouch ? undefined : `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease',
       }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={isTouch ? undefined : handleMouseMove}
+      onMouseEnter={isTouch ? undefined : handleMouseEnter}
+      onMouseLeave={isTouch ? undefined : handleMouseLeave}
       whileHover={{
         y: -3,
         boxShadow: '0 12px 40px rgba(0,0,0,0.3)',
@@ -140,7 +142,7 @@ function SkillCard({ skill, index }: { skill: typeof skills[0]; index: number })
 
 export default function Skills() {
   return (
-    <section id="skills" className="px-6 md:px-12 py-[100px] max-w-[1200px] mx-auto relative">
+    <section id="skills" className="px-5 md:px-12 py-[60px] md:py-[100px] max-w-[1200px] mx-auto relative">
       <SectionHeader
         label="// Expertise"
         title="Technical Depth"

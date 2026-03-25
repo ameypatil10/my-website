@@ -7,7 +7,7 @@ import { staggerContainer, fadeUp, viewportConfig } from "@/lib/animations"
 
 export default function GitHubSection() {
   return (
-    <section id="github" className="px-6 md:px-12 py-[100px] max-w-[1200px] mx-auto relative">
+    <section id="github" className="px-5 md:px-12 py-[60px] md:py-[100px] max-w-[1200px] mx-auto relative">
       <SectionHeader
         label="// Open Source"
         title="GitHub Projects"

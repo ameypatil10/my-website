@@ -6,6 +6,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { experience } from '@/lib/data'
 import { staggerContainer, fadeUp, viewportConfig, springConfig } from '@/lib/animations'
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 function ShimmerBorderCard({ children, className, style, ...props }: {
   children: React.ReactNode
@@ -14,6 +15,7 @@ function ShimmerBorderCard({ children, className, style, ...props }: {
   [key: string]: unknown
 }) {
   const [isHovered, setIsHovered] = useState(false)
+  const isTouch = useIsTouchDevice()
 
   return (
     <motion.div
@@ -21,12 +23,12 @@ function ShimmerBorderCard({ children, className, style, ...props }: {
       style={{
         ...style,
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={isTouch ? undefined : () => setIsHovered(true)}
+      onMouseLeave={isTouch ? undefined : () => setIsHovered(false)}
       {...props}
     >
-      {/* Shimmer border overlay */}
-      {isHovered && (
+      {/* Shimmer border overlay — disabled on touch */}
+      {!isTouch && isHovered && (
         <div
           className="absolute inset-0 rounded-[16px] pointer-events-none"
           style={{
@@ -54,7 +56,7 @@ export default function Experience() {
   const scaleY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), springConfig)
 
   return (
-    <section id="experience" className="px-6 md:px-12 py-[100px] max-w-[1200px] mx-auto relative">
+    <section id="experience" className="px-5 md:px-12 py-[60px] md:py-[100px] max-w-[1200px] mx-auto relative">
       <SectionHeader
         label="// Experience"
         title="Career Journey"
@@ -152,9 +154,9 @@ export default function Experience() {
                 <ShimmerBorderCard
                   key={ri}
                   variants={fadeUp}
-                  className="mb-4 relative rounded-[16px] border transition-all duration-400 ease-expo-out"
+                  className="mb-4 relative rounded-[16px] border transition-all duration-400 ease-expo-out overflow-hidden"
                   style={{
-                    padding: '24px 28px',
+                    padding: '20px 20px',
                     background: 'var(--bg-card)',
                     borderColor: 'var(--border)',
                   }}
@@ -175,7 +177,7 @@ export default function Experience() {
 
                   {/* Header */}
                   <div className="flex justify-between items-start flex-wrap gap-2">
-                    <span className="text-[17px] font-bold text-foreground tracking-[-0.3px]">
+                    <span className="text-[16px] sm:text-[17px] font-bold text-foreground tracking-[-0.3px]">
                       {role.title}
                     </span>
                     <span className="text-[12px] text-foreground-dim font-mono">

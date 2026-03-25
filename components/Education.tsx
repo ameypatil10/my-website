@@ -17,7 +17,7 @@ const highlightFadeIn = (delay: number) => ({
 
 export default function Education() {
   return (
-    <section id="education" className="px-6 md:px-12 py-[100px] max-w-[1200px] mx-auto relative">
+    <section id="education" className="px-5 md:px-12 py-[60px] md:py-[100px] max-w-[1200px] mx-auto relative">
       <SectionHeader label="// Education" title="Academic Foundation" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
