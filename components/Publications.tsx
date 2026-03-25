@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { publications } from '@/lib/data'
-import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, textSlideUp, viewportConfig } from '@/lib/animations'
 
 const venueTypeLabel: Record<string, string> = {
   main: 'Main Conference',
@@ -35,7 +35,7 @@ export default function Publications() {
 
       <motion.div
         className="flex flex-col gap-4 mt-12"
-        variants={staggerContainer(100)}
+        variants={staggerContainer(150)}
         initial="initial"
         whileInView="animate"
         viewport={viewportConfig}
@@ -43,7 +43,7 @@ export default function Publications() {
         {publications.map((pub, i) => (
           <motion.div
             key={i}
-            variants={fadeUp}
+            variants={cardReveal}
             className="group relative flex flex-col sm:grid sm:grid-cols-[auto_1fr_auto] gap-3 sm:gap-6 items-start rounded-[16px] p-5 sm:p-7 transition-all duration-400 ease-expo-out"
             style={{
               background: 'var(--bg-card)',
@@ -116,13 +116,25 @@ export default function Publications() {
               <h3 className="text-[16px] sm:text-[17px] font-bold text-foreground leading-[1.4] tracking-[-0.3px]">
                 {pub.title}
               </h3>
-              <p className="text-[13px] text-foreground-muted mt-[6px]">
+              <motion.p
+                variants={textSlideUp}
+                initial="initial"
+                whileInView="animate"
+                viewport={viewportConfig}
+                className="text-[13px] text-foreground-muted mt-[6px]"
+              >
                 {highlightAuthor(pub.authors, pub.authorHighlight)}
-              </p>
+              </motion.p>
               {pub.abstract && (
-                <p className="text-[13px] text-foreground-dim mt-[10px] leading-[1.6]">
+                <motion.p
+                  variants={textSlideUp}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={viewportConfig}
+                  className="text-[13px] text-foreground-dim mt-[10px] leading-[1.6]"
+                >
                   {pub.abstract}
-                </p>
+                </motion.p>
               )}
               <a
                 href={pub.link}

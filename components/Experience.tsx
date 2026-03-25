@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { experience } from '@/lib/data'
-import { staggerContainer, fadeUp, viewportConfig, springConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, fadeUp, itemPop, viewportConfig, springConfig } from '@/lib/animations'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 function ShimmerBorderCard({ children, className, style, ...props }: {
@@ -77,7 +77,7 @@ export default function Experience() {
         {experience.map((group, gi) => (
           <div key={gi} className="mb-12 relative">
             {/* Group header */}
-            <ScrollReveal>
+            <ScrollReveal direction="right">
               <div className="flex items-center gap-4 mb-5 relative">
                 {/* Group dot with pulse ring animation */}
                 <motion.div
@@ -145,7 +145,7 @@ export default function Experience() {
 
             {/* Role cards */}
             <motion.div
-              variants={staggerContainer(80)}
+              variants={staggerContainer(120)}
               initial="initial"
               whileInView="animate"
               viewport={viewportConfig}
@@ -153,7 +153,7 @@ export default function Experience() {
               {group.roles.map((role, ri) => (
                 <ShimmerBorderCard
                   key={ri}
-                  variants={fadeUp}
+                  variants={cardReveal}
                   className="mb-4 relative rounded-[16px] border transition-all duration-400 ease-expo-out overflow-hidden"
                   style={{
                     padding: '20px 20px',
@@ -194,10 +194,17 @@ export default function Experience() {
 
                   {/* Projects */}
                   {role.projects.length > 0 && (
-                    <div className="mt-[14px]">
+                    <motion.div
+                      className="mt-[14px]"
+                      variants={staggerContainer(60)}
+                      initial="initial"
+                      whileInView="animate"
+                      viewport={viewportConfig}
+                    >
                       {role.projects.map((project, pi) => (
-                        <div
+                        <motion.div
                           key={pi}
+                          variants={fadeUp}
                           className="flex items-start gap-[10px] py-[10px]"
                           style={{
                             borderTop: pi > 0 ? '1px solid var(--border)' : 'none',
@@ -221,17 +228,24 @@ export default function Experience() {
                               </p>
                             )}
                           </div>
-                        </div>
+                        </motion.div>
                       ))}
-                    </div>
+                    </motion.div>
                   )}
 
                   {/* Tags */}
                   {role.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-[6px] mt-[14px]">
+                    <motion.div
+                      className="flex flex-wrap gap-[6px] mt-[14px]"
+                      variants={staggerContainer(50)}
+                      initial="initial"
+                      whileInView="animate"
+                      viewport={viewportConfig}
+                    >
                       {role.tags.map((tag, ti) => (
-                        <span
+                        <motion.span
                           key={ti}
+                          variants={itemPop}
                           className="text-[11px] font-medium font-mono px-[10px] py-1 rounded-full border"
                           style={
                             tag.color === 'cyan'
@@ -248,9 +262,9 @@ export default function Experience() {
                           }
                         >
                           {tag.label}
-                        </span>
+                        </motion.span>
                       ))}
-                    </div>
+                    </motion.div>
                   )}
                 </ShimmerBorderCard>
               ))}

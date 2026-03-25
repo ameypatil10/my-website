@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { SectionHeader } from "@/components/ui/SectionHeader"
-import { staggerContainer, fadeUp, viewportConfig } from "@/lib/animations"
+import { staggerContainer, scaleIn, viewportConfig } from "@/lib/animations"
 
 const links = [
   {
@@ -63,7 +63,7 @@ export default function Contact() {
 
         <motion.div
           className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mt-10"
-          variants={staggerContainer(80)}
+          variants={staggerContainer(100)}
           initial="initial"
           whileInView="animate"
           viewport={viewportConfig}
@@ -75,7 +75,7 @@ export default function Contact() {
               target={link.href.startsWith("mailto") ? undefined : "_blank"}
               rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
               aria-label={link.ariaLabel}
-              variants={fadeUp}
+              variants={scaleIn}
               className="group flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl border text-[14px] font-medium text-foreground transition-all duration-300 w-full sm:w-auto"
               style={{
                 background: "var(--bg-card)",

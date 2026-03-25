@@ -5,7 +5,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
 import { AnimatedCounter } from '@/components/ui/AnimatedCounter'
 import { stats } from '@/lib/data'
-import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, viewportConfig } from '@/lib/animations'
 
 export default function About() {
   return (
@@ -23,7 +23,7 @@ export default function About() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-[60px] mt-12 items-start">
         {/* Left: text */}
-        <ScrollReveal>
+        <ScrollReveal blur>
           <p className="text-[17px] text-foreground-muted leading-[1.8]">
             Over <strong className="text-foreground font-semibold">5+ years at Flipkart</strong>,
             I built AI systems that serve hundreds of millions of users — from a machine translation
@@ -45,7 +45,7 @@ export default function About() {
         {/* Right: stat grid */}
         <motion.div
           className="grid grid-cols-2 gap-5"
-          variants={staggerContainer(60)}
+          variants={staggerContainer(120)}
           initial="initial"
           whileInView="animate"
           viewport={viewportConfig}
@@ -53,7 +53,7 @@ export default function About() {
           {stats.map((stat, i) => (
             <motion.div
               key={i}
-              variants={fadeUp}
+              variants={cardReveal}
               className="p-6 rounded-[16px] border transition-all duration-400 ease-expo-out hover:-translate-y-[2px] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
               style={{
                 background: 'var(--bg-card)',

@@ -11,14 +11,14 @@ const containerVariants = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.15,
       delayChildren: 0.2,
     },
   },
 }
 
 const childVariants = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 50 },
   animate: {
     opacity: 1,
     y: 0,

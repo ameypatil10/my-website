@@ -3,17 +3,9 @@
 import { motion } from "framer-motion"
 import { SectionHeader } from "@/components/ui/SectionHeader"
 import { education } from "@/lib/data"
-import { slideRight, slideLeft, viewportConfig, expoOut } from "@/lib/animations"
+import { slideRight, slideLeft, viewportConfig, staggerContainer, itemPop, expoOut } from "@/lib/animations"
 
 const cardVariants = [slideRight, slideLeft]
-
-const highlightFadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: { duration: 0.4, delay, ease: expoOut },
-  },
-})
 
 export default function Education() {
   return (
@@ -57,14 +49,17 @@ export default function Education() {
             </p>
 
             {edu.highlights.length > 0 && (
-              <ul className="mt-4 flex flex-col gap-2">
+              <motion.ul
+                className="mt-4 flex flex-col gap-2"
+                variants={staggerContainer(60)}
+                initial="initial"
+                whileInView="animate"
+                viewport={viewportConfig}
+              >
                 {edu.highlights.map((item, j) => (
                   <motion.li
                     key={j}
-                    variants={highlightFadeIn(j * 0.05)}
-                    initial="initial"
-                    whileInView="animate"
-                    viewport={viewportConfig}
+                    variants={itemPop}
                     className="flex items-start gap-2.5 text-[13px] text-foreground-muted"
                   >
                     <span
@@ -74,7 +69,7 @@ export default function Education() {
                     {item}
                   </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             )}
           </motion.div>
         ))}

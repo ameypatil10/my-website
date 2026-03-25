@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Layers, Globe, MessageSquare, Image, BarChart3, Rocket } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { skills } from '@/lib/data'
-import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, itemPop, fadeUp, viewportConfig } from '@/lib/animations'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 const iconMap: Record<string, React.ElementType> = {
@@ -42,7 +42,7 @@ function SkillCard({ skill, index }: { skill: typeof skills[0]; index: number })
 
   return (
     <motion.div
-      variants={fadeUp}
+      variants={cardReveal}
       className="relative overflow-hidden rounded-[16px] border p-7 transition-all duration-400 ease-expo-out group"
       style={{
         background: 'var(--bg-card)',
@@ -115,27 +115,38 @@ function SkillCard({ skill, index }: { skill: typeof skills[0]; index: number })
         </span>
       </div>
 
-      {/* Items */}
-      <div className="flex flex-wrap gap-[6px] mt-[14px]">
+      {/* Items — staggered itemPop */}
+      <motion.div
+        className="flex flex-wrap gap-[6px] mt-[14px]"
+        variants={staggerContainer(40)}
+        initial="initial"
+        whileInView="animate"
+        viewport={viewportConfig}
+      >
         {skill.items.map((item, ii) => (
-          <span
+          <motion.span
             key={ii}
+            variants={itemPop}
             className="text-[11px] text-foreground-muted font-medium px-[10px] py-[3px] rounded-full"
             style={{ background: 'var(--surface)' }}
           >
             {item}
-          </span>
+          </motion.span>
         ))}
-      </div>
+      </motion.div>
 
       {/* Highlight */}
-      <div
+      <motion.div
+        variants={fadeUp}
+        initial="initial"
+        whileInView="animate"
+        viewport={viewportConfig}
         className="text-[12px] text-foreground-dim mt-[14px] pt-[14px] leading-[1.5]"
         style={{ borderTop: '1px solid var(--border)' }}
       >
         <strong className="text-cyan font-semibold">{skill.highlight}</strong>{' '}
         {skill.highlightAccent}
-      </div>
+      </motion.div>
     </motion.div>
   )
 }
@@ -151,7 +162,7 @@ export default function Skills() {
 
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-12"
-        variants={staggerContainer(60)}
+        variants={staggerContainer(100)}
         initial="initial"
         whileInView="animate"
         viewport={viewportConfig}

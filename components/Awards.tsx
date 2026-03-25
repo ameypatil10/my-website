@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { SectionHeader } from "@/components/ui/SectionHeader"
 import { awards } from "@/lib/data"
-import { staggerContainer, fadeUp, viewportConfig } from "@/lib/animations"
+import { staggerContainer, cardReveal, viewportConfig } from "@/lib/animations"
 
 export default function Awards() {
   return (
@@ -12,7 +12,7 @@ export default function Awards() {
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12"
-        variants={staggerContainer(80)}
+        variants={staggerContainer(100)}
         initial="initial"
         whileInView="animate"
         viewport={viewportConfig}
@@ -20,7 +20,7 @@ export default function Awards() {
         {awards.map((award, i) => (
           <motion.div
             key={i}
-            variants={fadeUp}
+            variants={cardReveal}
             className="spotlight-card relative overflow-hidden rounded-[16px] border p-6 transition-all duration-300 group"
             style={{
               background: "var(--bg-card)",

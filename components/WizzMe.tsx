@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { MessageCircle, Mic, Users, TrendingUp } from 'lucide-react'
 import { wizzme } from '@/lib/data'
-import { staggerContainer, fadeUp, viewportConfig } from '@/lib/animations'
+import { staggerContainer, cardReveal, fadeUp, itemPop, textSlideUp, viewportConfig } from '@/lib/animations'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 const iconMap: Record<string, React.ElementType> = {
@@ -48,7 +48,7 @@ function PillarCard({ pillar, index }: { pillar: typeof wizzme.pillars[0]; index
 
   return (
     <motion.div
-      variants={fadeUp}
+      variants={cardReveal}
       className="relative overflow-hidden rounded-[20px] border p-6 sm:p-8 transition-all duration-400 ease-expo-out group"
       style={{
         background: 'var(--bg-card)',
@@ -184,7 +184,7 @@ export default function WizzMe() {
 
           {/* Tagline */}
           <motion.p
-            variants={fadeUp}
+            variants={textSlideUp}
             className="text-[18px] md:text-[20px] text-foreground-muted mt-4 font-medium"
           >
             {wizzme.tagline}
@@ -192,7 +192,7 @@ export default function WizzMe() {
 
           {/* Mission */}
           <motion.p
-            variants={fadeUp}
+            variants={textSlideUp}
             className="text-base text-foreground-dim mt-4 leading-relaxed max-w-[580px] mx-auto"
           >
             {wizzme.mission}
@@ -216,7 +216,7 @@ export default function WizzMe() {
         {/* Middle: Four Pillars */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-16"
-          variants={staggerContainer(100)}
+          variants={staggerContainer(120)}
           initial="initial"
           whileInView="animate"
           viewport={viewportConfig}
@@ -254,7 +254,7 @@ export default function WizzMe() {
           </motion.div>
 
           <motion.p
-            variants={fadeUp}
+            variants={textSlideUp}
             className="text-[14px] text-foreground-muted mt-4 max-w-[560px] mx-auto leading-relaxed"
           >
             {wizzme.roleDescription}
@@ -263,7 +263,7 @@ export default function WizzMe() {
           {/* Feature chips */}
           <motion.div
             className="flex flex-wrap justify-center gap-2 mt-6"
-            variants={staggerContainer(30)}
+            variants={staggerContainer(50)}
             initial="initial"
             whileInView="animate"
             viewport={viewportConfig}
@@ -271,7 +271,7 @@ export default function WizzMe() {
             {wizzme.features.map((feature, i) => (
               <motion.span
                 key={i}
-                variants={fadeUp}
+                variants={itemPop}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] text-foreground-muted border"
                 style={{
                   background: 'var(--bg-card)',

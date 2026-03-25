@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { SectionHeader } from "@/components/ui/SectionHeader"
 import { githubRepos } from "@/lib/data"
-import { staggerContainer, fadeUp, viewportConfig } from "@/lib/animations"
+import { staggerContainer, cardReveal, viewportConfig } from "@/lib/animations"
 
 export default function GitHubSection() {
   return (
@@ -25,7 +25,7 @@ export default function GitHubSection() {
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12"
-        variants={staggerContainer(60)}
+        variants={staggerContainer(80)}
         initial="initial"
         whileInView="animate"
         viewport={viewportConfig}
@@ -36,7 +36,7 @@ export default function GitHubSection() {
             href={repo.url}
             target="_blank"
             rel="noopener noreferrer"
-            variants={fadeUp}
+            variants={cardReveal}
             className="shine-card group block relative overflow-hidden rounded-[16px] border p-6 transition-all duration-300"
             style={{
               background: "var(--bg-card)",
