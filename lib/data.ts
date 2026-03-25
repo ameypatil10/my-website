@@ -33,7 +33,7 @@ export const experience: ExperienceGroup[] = [
     dotColor: 'cyan',
     roles: [
       {
-        title: 'Co-Founder & CTO',
+        title: 'Co-Founder & Tech Lead',
         period: 'Dec 2025 — Present · Bangalore',
         description: '',
         projects: [
@@ -335,7 +335,7 @@ export const wizzme = {
   tagline: 'AI-Native Knowledge Network',
   mission: 'Transforming how people make decisions by connecting them with lived experiences from their network.',
   insight: 'Knowledge isn\'t information. Knowledge is lived experience.',
-  role: 'Co-Founder & CTO',
+  role: 'Co-Founder & Tech Lead',
   roleDescription: 'Technical architect and execution engine — designing scalable social graph architecture, leading AI/ML systems, and driving product from zero to one.',
   pillars: [
     {
