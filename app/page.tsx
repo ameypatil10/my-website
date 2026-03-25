@@ -4,6 +4,11 @@ import About from "@/components/About"
 import Experience from "@/components/Experience"
 import Skills from "@/components/Skills"
 import Publications from "@/components/Publications"
+import Awards from "@/components/Awards"
+import Education from "@/components/Education"
+import GitHubSection from "@/components/GitHubSection"
+import Contact from "@/components/Contact"
+import Footer from "@/components/Footer"
 import { SectionDivider } from "@/components/ui/SectionDivider"
 
 export default function Home() {
@@ -21,7 +26,15 @@ export default function Home() {
         <SectionDivider />
         <Publications />
         <SectionDivider />
+        <Awards />
+        <SectionDivider />
+        <Education />
+        <SectionDivider />
+        <GitHubSection />
+        <SectionDivider />
+        <Contact />
       </main>
+      <Footer />
     </>
   )
 }
